@@ -1,1 +1,147 @@
 
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Docta Mee Contact Card</title>
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #000000;
+      --card: #f4f4f4;
+      --accent: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --fg: #ffffff;
+        --card: #111111;
+        --accent: #fff;
+      }
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: system-ui, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 25px;
+      border-radius: 18px;
+      max-width: 420px;
+      width: 92%;
+      text-align: center;
+      box-shadow: 0px 10px 35px rgba(0,0,0,0.12);
+      animation: slide 0.5s ease;
+    }
+
+    @keyframes slide {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+      background: var(--accent);
+      color: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 700;
+      margin: 0 auto 12px;
+    }
+
+    .qr img {
+      width: 260px;
+      height: 260px;
+      border-radius: 14px;
+      border: 2px solid #ddd;
+    }
+
+    .btn {
+      display: block;
+      padding: 14px;
+      margin-top: 15px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .download {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .view {
+      background: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+    }
+
+    small {
+      display: block;
+      margin-top: 14px;
+      color: #888;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="avatar">DM</div>
+
+    <h2>Docta Mee</h2>
+    <p>Docta Me — Boss</p>
+
+    <textarea id="vcf" style="display:none;">
+BEGIN:VCARD
+VERSION:3.0
+FN:Docta Mee
+N:Mee;Docta;;;
+ORG:Docta Me
+TITLE:Boss
+TEL;TYPE=CELL,VOICE:+255740430220
+EMAIL:nagreytemu44@gmail.com
+END:VCARD
+    </textarea>
+
+    <div class="qr">
+      <img id="qr-img" alt="QR Code" />
+    </div>
+
+    <a id="download" class="btn download" download="docta_mee.vcf">Pakua Contact (.vcf)</a>
+    <a id="view" class="btn view" href="#">Angalia vCard</a>
+
+    <small>Scan QR au pakua contact kuhifadhi moja kwa moja.</small>
+  </div>
+
+<script>
+(function(){
+  const vcf = document.getElementById("vcf").value.trim();
+  const uri = "data:text/vcard;charset=utf-8," + encodeURIComponent(vcf);
+
+  document.getElementById("download").href = uri;
+  document.getElementById("view").href = uri;
+
+  const qrURL = "https://chart.googleapis.com/chart?cht=qr&chs=400x400&chl=" + encodeURIComponent(vcf);
+  document.getElementById("qr-img").src = qrURL;
+})();
+</script>
+
+</body>
+</html>
